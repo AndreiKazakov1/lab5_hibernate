@@ -167,7 +167,7 @@ public class MenuFunctions {
     private boolean getPersonId(String id) {
         boolean isAppropriateNumber = false;
         //   if (Validator.correctId(id)) {
-        if (!(Integer.parseInt(id) < 0) && !(Integer.parseInt(id) > getPeople().size())) {
+        if (!(Integer.parseInt(id) < 0)) /*&& !(Integer.parseInt(id) > getPeople().size()))*/ {
             isAppropriateNumber = true;
         }
         else {
@@ -271,7 +271,7 @@ public class MenuFunctions {
     private boolean getCompanyId(String id) {
         boolean isAppropriateNumber = false;
         //   if (Validator.correctId(id)) {
-        if (!(Integer.parseInt(id) < 0) && !(Integer.parseInt(id) > getCompanies().size())) {
+        if (!(Integer.parseInt(id) < 0)) /*&& !(Integer.parseInt(id) > getCompanies().size()))*/ {
             isAppropriateNumber = true;
         }
         else {
