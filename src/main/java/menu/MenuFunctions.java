@@ -155,7 +155,7 @@ public class MenuFunctions {
     public void deletePerson() {
         System.out.println("---Удаление пользователя---");
         showPeople();
-        System.out.print("Выберите ID пользователя для изменения: ");
+        System.out.print("Выберите ID пользователя для удаления: ");
         String id = in.nextLine();
         if (getPersonId(id)) {
             if (personService.deletePerson(Integer.parseInt(id))) {

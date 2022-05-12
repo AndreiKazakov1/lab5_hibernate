@@ -3,7 +3,7 @@ package exception;
 import org.hibernate.HibernateError;
 
 public class ShowException {
-    public static void showNotice(HibernateError e) {
-        System.out.println("Something wrong");
+    public static void showNotice(Exception e) {
+        System.out.println("Exception :" + e);
     }
 }
