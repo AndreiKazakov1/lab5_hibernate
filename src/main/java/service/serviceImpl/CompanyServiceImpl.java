@@ -3,6 +3,7 @@ package service.serviceImpl;
 import dao.CompanyDao;
 import dao.daoImpl.CompanyDaoImpl;
 import entity.Company;
+import entity.Person;
 import exception.ShowException;
 import org.hibernate.HibernateError;
 import service.CompanyService;
@@ -31,16 +32,32 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public boolean updateCompany(Company company) {
         boolean isUpdated = false;
-        System.out.println("Это ДЗ");
+        System.out.println("Это ДЗ ready");
+        try{
+            if (companyDao.updateCompany(company))
+                isUpdated = true;
+        }
+        catch (HibernateError e){
+            ShowException.showNotice(e);
+        }
         return isUpdated;
     }
 
+
     @Override
     public boolean deleteCompany(int id) {
-        System.out.println("Это ДЗ");
-        // return isDeleted;
-        return false;
+        System.out.println("Это ДЗ ready");
+        boolean isDeleted = false;
+        try {
+            if (companyDao.deleteCompany(id))
+                isDeleted = true;
+        }
+        catch (HibernateError e){
+            ShowException.showNotice(e);
+        }
+        return isDeleted;
     }
+
 
     @Override
     public List<Company> showCompanies() {

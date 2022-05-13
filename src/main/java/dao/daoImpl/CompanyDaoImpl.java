@@ -2,6 +2,7 @@ package dao.daoImpl;
 
 import dao.CompanyDao;
 import entity.Company;
+import entity.Person;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import sessionFactory.SessionFactoryImpl;
@@ -36,7 +37,12 @@ public class CompanyDaoImpl implements CompanyDao {
     public boolean updateCompany(Company company) {
         boolean isUpdated = false;
         try {
-            // Тут нужно обновление
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            session.update(company);
+            transaction.commit();
+            session.flush();
+            session.close();
             isUpdated = true;
         }
         catch (NoClassDefFoundError e) {
@@ -44,6 +50,7 @@ public class CompanyDaoImpl implements CompanyDao {
         }
         return isUpdated;
     }
+
 
     @Override
     public boolean deleteCompany(int id) {
@@ -57,6 +64,26 @@ public class CompanyDaoImpl implements CompanyDao {
         }
         return isDeleted;
     }
+
+    @Override
+    public boolean deletePerson(int id) {
+        boolean isDeleted = false;
+        try {
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Person person = session.load(Person.class, id);
+            Transaction tx = session.beginTransaction();
+            session.delete(person);
+            tx.commit();
+            session.flush();
+            session.close();
+            isDeleted = true;
+        }
+        catch (NoClassDefFoundError e) {
+            System.out.println("Exception: " + e);
+        }
+        return isDeleted;
+    }
+
 
     @Override
     public Company findCompanyById(int id) {
@@ -84,7 +111,7 @@ public class CompanyDaoImpl implements CompanyDao {
 
     @Override
     public List<Company> showCompanies() {
-        List<Company> companies = (List<Company>)SessionFactoryImpl.getSessionFactory().openSession().createQuery("From Com1pany").list();
+        List<Company> companies = (List<Company>)SessionFactoryImpl.getSessionFactory().openSession().createQuery("From Company").list();
         return companies;
     }
 }
