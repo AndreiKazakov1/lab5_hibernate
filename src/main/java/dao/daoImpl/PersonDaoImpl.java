@@ -22,7 +22,6 @@ public class PersonDaoImpl implements PersonDao {
             Transaction tx = session.beginTransaction();
             session.save(person);
             tx.commit();
-            //session.flush();
             session.close();
             isAdded = true;
         }
@@ -40,7 +39,6 @@ public class PersonDaoImpl implements PersonDao {
             Transaction tx = session.beginTransaction();
             session.update(person);
             tx.commit();
-            session.flush();
             session.close();
             isUpdated = true;
         }
@@ -59,7 +57,6 @@ public class PersonDaoImpl implements PersonDao {
             Transaction tx = session.beginTransaction();
             session.delete(person);
             tx.commit();
-            session.flush();
             session.close();
             isDeleted = true;
         }
@@ -87,7 +84,6 @@ public class PersonDaoImpl implements PersonDao {
             cr.select(root).where(cb.equal(root.get("personId"), id));
             person = session.createQuery(cr).getSingleResult();
             tx.commit();
-            session.flush();
             session.close();
         }
         catch (NoClassDefFoundError e) {

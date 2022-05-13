@@ -41,7 +41,6 @@ public class CompanyDaoImpl implements CompanyDao {
             Transaction transaction = session.beginTransaction();
             session.update(company);
             transaction.commit();
-            session.flush();
             session.close();
             isUpdated = true;
         }
@@ -56,25 +55,11 @@ public class CompanyDaoImpl implements CompanyDao {
     public boolean deleteCompany(int id) {
         boolean isDeleted = false;
         try {
-            // Тут нужно удаление
-            isDeleted = true;
-        }
-        catch (NoClassDefFoundError e) {
-            System.out.println("Exception: " + e);
-        }
-        return isDeleted;
-    }
-
-    @Override
-    public boolean deletePerson(int id) {
-        boolean isDeleted = false;
-        try {
             Session session = SessionFactoryImpl.getSessionFactory().openSession();
-            Person person = session.load(Person.class, id);
-            Transaction tx = session.beginTransaction();
-            session.delete(person);
-            tx.commit();
-            session.flush();
+            Company company = session.load(Company.class, id);
+            Transaction transaction = session.beginTransaction();
+            session.delete(company);
+            transaction.commit();
             session.close();
             isDeleted = true;
         }
@@ -89,13 +74,23 @@ public class CompanyDaoImpl implements CompanyDao {
     public Company findCompanyById(int id) {
         Company company = null;
         try {
-            //Тут нужен поиск
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Company> criteriaQuery = criteriaBuilder.createQuery(Company.class);
+            Root<Company> root = criteriaQuery.from(Company.class);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("company_Id"), id));
+            company = session.createQuery(criteriaQuery).getSingleResult();
+            transaction.commit();
+            session.close();
         }
         catch (NoClassDefFoundError e) {
             System.out.println("Exception: " + e);
         }
         return company;
     }
+
+
 
     @Override
     public Company findCompanyByName(String name) {

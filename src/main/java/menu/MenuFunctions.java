@@ -301,7 +301,7 @@ public class MenuFunctions {
     private void theTableForCompany(Company c) {
         System.out.println(" ");
         System.out.format("%10s%20s%30s", c.getCompanyId() + " |", c.getCompanyName() + " |", c.getCompanyCountry() + " |");
-        System.out.println(" ");
+        //System.out.println(" ");
     }
 
     private void theHeaderForCompany() {

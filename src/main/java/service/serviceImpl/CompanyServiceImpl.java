@@ -61,17 +61,33 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Company> showCompanies() {
-        System.out.println("Это ДЗ");
-        // return companies;
-        return null;
+        System.out.println("Это ДЗ ready");
+        List<Company>companies = null;
+        try {
+            companies = companyDao.showCompanies();
+        }
+        catch (HibernateError e){
+            ShowException.showNotice(e);
+        }
+        return companies;
     }
+
 
     @Override
     public Company findCompanyById(int id) {
         System.out.println("Это ДЗ");
-        //return company;
-        return null;
+        Company company = null;
+        try{
+            company = companyDao.findCompanyById(id);
+        }
+        catch (HibernateError e){
+            ShowException.showNotice(e);
+        }
+        return company;
+
     }
+
+
 
     @Override
     public Company findCompanyByName(String name) {
