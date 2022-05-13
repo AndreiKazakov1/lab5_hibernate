@@ -75,7 +75,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company findCompanyById(int id) {
-        System.out.println("Это ДЗ");
+        System.out.println("Это ДЗ ready");
         Company company = null;
         try{
             company = companyDao.findCompanyById(id);
@@ -88,12 +88,18 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
 
-
     @Override
     public Company findCompanyByName(String name) {
-        System.out.println("Это ДЗ");
-        //  return company;
-        return null;
+        System.out.println("Это ДЗ ready");
+        Company company = null;
+        try{
+            company = companyDao.findCompanyByName(name);
+        }
+        catch (HibernateError e){
+            ShowException.showNotice(e);
+        }
+        return company;
+
     }
 }
 

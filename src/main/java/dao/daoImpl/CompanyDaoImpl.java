@@ -79,7 +79,7 @@ public class CompanyDaoImpl implements CompanyDao {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Company> criteriaQuery = criteriaBuilder.createQuery(Company.class);
             Root<Company> root = criteriaQuery.from(Company.class);
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("company_Id"), id));
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("companyId"), id));
             company = session.createQuery(criteriaQuery).getSingleResult();
             transaction.commit();
             session.close();
@@ -96,7 +96,15 @@ public class CompanyDaoImpl implements CompanyDao {
     public Company findCompanyByName(String name) {
         Company company = null;
         try {
-            // Тут нужен поиск по имени
+            Session session = SessionFactoryImpl.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Company> criteriaQuery = criteriaBuilder.createQuery(Company.class);
+            Root<Company> root = criteriaQuery.from(Company.class);
+            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("companyName"), name));
+            company = session.createQuery(criteriaQuery).getSingleResult();
+            transaction.commit();
+            session.close();
         }
         catch (NoClassDefFoundError e) {
             System.out.println("Exception: " + e);
